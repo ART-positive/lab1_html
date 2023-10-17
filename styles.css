@@ -1,0 +1,167 @@
+/* Общие стили */
+body {
+    font-family: sans-serif;
+}
+
+header {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.container {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.block {
+    text-align: center;
+}
+
+.block img {
+    max-width: 100%;
+    height: auto;
+    padding-left: 40px;
+}
+
+.my-form {
+    text-align: center;
+    margin: 40px auto;
+    max-width: 400px;
+    padding: 20px;
+    background: linear-gradient(to bottom, #f5f5f5, #e5e5e5);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.vertical-block {
+    margin-bottom: 3%; /* Процентное значение для отступа между блоками */
+    text-align: left; /* Выравнивание текста внутри блока */
+    padding: 2%; /* Процентное значение для внутреннего отступа */
+    border: 1px solid #ccc; /* Граница блока */
+    border-radius: 5px; /* Закругленные углы */
+    background-color: #f4f4f4; /* Фоновый цвет */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень блока */
+    transition: background-color 0.3s; /* Плавное изменение цвета при наведении */
+
+    /* Установите размер шрифта и цвет текста */
+    font-size: 1.4em;  /*Процентное значение для размера шрифта */
+    color: #333;
+}
+
+#x {
+    font-size: 16px; /* Измените это значение на тот размер, который вам нужен */
+    /*color: #bf86d5;  Пример изменения цвета текста */
+}
+
+/* При наведении на блок изменяйте фоновый цвет */
+.vertical-block:hover {
+    background-color: #e0e0e0;
+}
+.center-button {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: 3%;
+    /* height: 100vh;  Высота блока будет равной высоте видимой области окна */
+}
+
+
+
+table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    border-radius: 10px;
+    border-spacing: 0;
+    text-align: center;
+}
+th {
+    background: #BCEBDD;
+    color: white;
+    text-shadow: 0 1px 1px #2D2020;
+    padding: 10px 20px;
+}
+th, td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: white;
+}
+th:first-child, td:first-child {
+    text-align: left;
+}
+th:first-child {
+    border-top-left-radius: 10px;
+}
+th:last-child {
+    border-top-right-radius: 10px;
+    border-right: none;
+}
+td {
+    padding: 10px 20px;
+    background: #F8E391;
+}
+tr:last-child td:first-child {
+    border-radius: 0 0 0 10px;
+}
+tr:last-child td:last-child {
+    border-radius: 0 0 10px 0;
+}
+tr td:last-child {
+    border-right: none;
+}
+
+.scroll {
+    height: 200px; /* Высота блока */
+    overflow-y: scroll; /* Включаем вертикальную прокрутку */
+}
+
+
+/* Стили для полей формы
+.form-group {
+    margin-bottom: 15px;
+}
+
+form{
+    width: 20%; /* Ширина формы в процентах */
+/*margin: 0 auto;  Выравнивание по центру */
+
+/*
+form label {
+    display: block;
+    margin-bottom: 15px;
+}
+*/
+
+input[type="number"] {
+    /*padding: 5px; */
+    width: 30%; /* Занимает всю доступную ширину */
+    padding: 10px 20px; /* Внутренний отступ в процентах (вертикальный отступ 2%, горизонтальный отступ 1%) */
+    border: 1px solid #ccc; /* Граница для видимой разметки поля */
+    border-radius: 5px; /* Закругление углов поля */
+    font-size: 16px; /* Размер шрифта */
+}
+
+/* Стили для кнопки отправки */
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+.button:hover { /* Стиль для кнопки Submit при наведении */
+    background-color: #0056b3; /* Изменяем цвет фона */
+}
+
+/* Стили для ошибок */
+.error {
+    color: red;
+}
+
+/* Добавьте другие стили по необходимости */
