@@ -31,13 +31,19 @@ function isPointInArea($x, $y, $r): bool
     }
     return false;
 }
-
 // Получаем параметры из GET-запроса
 if (isset($_GET["x"]) && isset($_GET["y"]) && isset($_GET["r"])) {
     $x = floatval($_GET["x"]);
     $y = floatval($_GET["y"]);
     $r = floatval($_GET["r"]);
 
+    $i = -2;
+    $flag = true;
+    while ($i <= 2) {
+        if($x == $i) $flag = false;
+        $i += 0.5;
+    }
+    if($flag || $y < 5 || $y > 5 || $r < 2 || $r > 5) http_response_code(404);
     // Проверяем попадание точки в область
     $isInArea = isPointInArea($x, $y, $r);
 
