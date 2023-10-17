@@ -26,8 +26,8 @@ function isPointInArea($x, $y, $r): bool
     }
     else {
         if($x + $y <= $r / 2) return true;
-        if(-$r <= $x && $x <= 0) return true;
-        if($r >= $y && $y >= 0) return true;
+        if($y == 0 && -$r <= $x && $x <= 0) return true;
+        if($x == 0 && $r >= $y && $y >= 0) return true;
     }
     return false;
 }
@@ -98,11 +98,22 @@ if (isset($_GET["x"]) && isset($_GET["y"]) && isset($_GET["r"])) {
                 <option value="2.0">2.0</option></select>
             </div>
             <div class="vertical-block">
-                <label for="y"></label><input type="number" name = "y" id = "y" step="any" placeholder="Y">
+                <label for="y"></label><input type="number" name = "y" id = "y" step="any" placeholder="Y" oninput="limitDecimalPlaces(this, 6)">
             </div>
             <div class="vertical-block">
-                <label for="r"></label><input type="number" name = "r" id = "r" step="any" placeholder="R">
+                <label for="r"></label><input type="number" name = "r" id = "r" step="any" placeholder="R" oninput="limitDecimalPlaces(this, 6)">
             </div>
+            <script>
+                function limitDecimalPlaces(input, maxDecimalPlaces) {
+                    if (input.value.includes('.')) {
+                        var parts = input.value.split('.');
+                        if (parts[1].length > maxDecimalPlaces) {
+                            parts[1] = parts[1].slice(0, maxDecimalPlaces);
+                            input.value = parts.join('.');
+                        }
+                    }
+                }
+            </script>
             <div class="center-button">
                 <input type="submit" class = "button" value="Отправить" id="submitButton">
             </div>
