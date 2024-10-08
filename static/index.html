@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point in Area</title>
+    <style>
+        /*
+        * {
+            transition: 6s;
+        }
+        .loaded * {
+            rotate: 360deg;
+        }
+         */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0; /* Убран отступ */
+            padding: 0; /* Убран отступ */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #header {
+            font-family: cursive;
+            color: #4A90E2;
+            font-size: 24px;
+            text-align: center;
+            margin: 10px 0; /* Отступы только сверху и снизу заголовка */
+        }
+        #container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 5px; /* Отступ между картинкой и таблицей результатов */
+        }
+        img {
+            max-width: 800px; /* Увеличен размер изображения */
+            height: auto;
+            margin-right: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            margin-top: 5px;
+
+
+        }
+        td, th {
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+        th {
+            background-color: #ffffff;
+            color: #ff69b4;
+            position: sticky; /* Фиксируем заголовки */
+            top: 0; /* Задаем позицию */
+            z-index: 10; /* Чтобы заголовки были выше других элементов */
+        }
+        #resultsTableContainer tr:nth-child(2n) td {
+            background: #E1F6F3;
+        }
+        h2 {
+            margin-top: 0; /* Убран отступ сверху заголовка "Результаты" */
+            color: #4A90E2;
+        }
+        #resultsTableContainer {
+            max-height: 350px; /* Высота для прокрутки */
+            overflow-y: auto; /* Включена вертикальная прокрутка */
+            margin-top: 20px;
+        }
+        #resultsTableContainer table {
+            font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+            font-size: 14px;
+            /* border-radius: 10px; */
+            border-spacing: 0;
+            text-align: center;
+        }
+        #resultsTableContainer th {
+            background: #BCEBDD;
+            color: white;
+            text-shadow: 0 1px 1px #2D2020;
+            padding: 10px 20px;
+        }
+        #resultsTableContainer th, #resultsTableContainer td {
+            border-style: solid;
+            border-width: 0 1px 1px 0;
+            border-color: white;
+        }
+        #resultsTableContainer th:first-child, #resultsTableContainer td:first-child {
+            text-align: left;
+        }
+        #resultsTableContainer td {
+            padding: 10px 20px;
+            background: #F8E391;
+        }
+        #resultsTableContainer tr:last-child td:first-child {
+            border-radius: 0 0 0 10px;
+        }
+        #resultsTableContainer tr:last-child td:last-child {
+            border-radius: 0 0 10px 0;
+        }
+        #resultsTableContainer tr td:last-child {
+            border-right: none;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px; /* Отступ между таблицей и формой */
+            align-items: center;
+        }
+        label {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        input, select {
+            margin: 0 10px;
+            padding: 8px; /* Увеличен отступ для полей ввода */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #357ABD;
+        }
+    </style>
+</head>
+<body onload="document.body.className = 'loaded';">
+<table>
+    <thead>
+    <tr>
+        <th colspan="5">
+            <div id="header">
+                ФИО Студента: Березовский Артемий Сергеевич<br>
+                Номер группы: P3230<br>
+                Номер варианта: 9942145
+            </div>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="1">
+            <div id="container">
+                <img src="image.png" alt="Описание картинки">
+                <div>
+                    <h2>Результаты</h2>
+                    <div id="resultsTableContainer">
+                        <table id="resultsTable">
+                            <thead>
+                            <tr>
+                                <th>X</th>
+                                <th>Y</th>
+                                <th>R</th>
+                                <th>Попадание в область</th>
+                                <th>Текущее время</th>
+                                <th>Время выполнения скрипта</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Данные будут добавлены сюда -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">
+            <form id="dataForm" method="POST">
+                <label for="x">Координата X:</label>
+                <select name="x" id="x">
+                    <option value="-4">-4</option>
+                    <option value="-3">-3</option>
+                    <option value="-2">-2</option>
+                    <option value="-1">-1</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+
+                <label for="y">Координата Y:</label>
+                <input type="number" id="y" name="y" step="any" oninput="limitDigits(this, 8)">
+
+                <label for="r">Радиус:</label>
+                <input type="number" id="r" name="r" step="any" oninput="limitDigits(this, 8)">
+
+                <button type="submit">Отправить</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+    <script>
+        function limitDigits(input, maxDigits) {
+            const value = input.value;
+            if(value.length > maxDigits) {
+                input.value = value.slice(0, maxDigits);
+            }
+        }
+        // Очищаем таблицу перед добавлением нового элемента
+        //tableBody.innerHTML = '';
+        function populateTable(data) {
+            const tableBody = document.querySelector('#resultsTable tbody');
+
+            const row = document.createElement('tr');
+
+            const x = document.createElement('td');
+            x.textContent = data.at(-1).x;
+            const y = document.createElement('td');
+            y.textContent = data.at(-1).y;
+            const r = document.createElement('td');
+            r.textContent = data.at(-1).r;
+            const hit = document.createElement('td');
+            hit.textContent = (data.at(-1).isHit.toString() === "true" ? "Да" : "Нет");
+            const tm = document.createElement('td');
+            const options = {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+            };
+            tm.textContent = new Intl.DateTimeFormat("ru-RU", options).format(new Date(+data.at(-1).curTime));
+            const dt = document.createElement('td');
+            dt.textContent = data.at(-1).dur.toString() + " мс";
+
+            row.appendChild(x);
+            row.appendChild(y);
+            row.appendChild(r);
+            row.appendChild(hit);
+            row.appendChild(tm);
+            row.appendChild(dt);
+
+            tableBody.appendChild(row);
+        }
+        const result = [];
+
+        const minY = -3, maxY = 5;
+        const minR = 1, maxR = 4;
+        const inputY = document.getElementById("y");
+        const inputR = document.getElementById("r");
+        inputY.addEventListener("input", () => validateY());
+        inputR.addEventListener("input", () => validateR());
+
+        function validateY() {
+            //inputY.setCustomValidity("");
+            if(inputY.value.toString().includes("e")) {
+                inputY.setCustomValidity("What are you doing??🤨");
+                return false;
+            }
+            if (inputY.value.toString() === "") {
+                inputY.setCustomValidity("Некорректное значение!");
+                return false;
+            }
+            /*
+            if(inputY.value.toString()[0] === "0" || (inputY.value.toString().length > 1 &&
+                                                      inputY.value.toString()[0] === "-" &&
+                                                      inputY.value.toString()[1] === "0" )) {
+                inputY.setCustomValidity("Пожалуйста, уберите лишние нули🥺");
+                return false;
+            }
+             */
+            const value = inputY.value;
+            if (value < minY) {
+                inputY.setCustomValidity("Значение слишком маленькое, должно быть не меньше " + minY);
+                return false;
+            }
+            else if (value > maxY){
+                inputY.setCustomValidity("Значение слишком большое, должно быть не больше " + maxY);
+                return false;
+            }
+            else {
+                inputY.setCustomValidity("");
+                return true;
+            }
+        }
+        function validateR() {
+            //inputR.setCustomValidity("");
+            if (inputR.value === "") {
+                inputR.setCustomValidity("Некорректное значение!");
+                return false;
+            }
+            if(inputR.value.toString().includes("e")) {
+                inputR.setCustomValidity("What are you doing??🤨");
+                return false;
+            }
+            const value = inputR.value;
+            if (value < minR) {
+                inputR.setCustomValidity("Значение слишком маленькое, должно быть не меньше " + minR);
+                return false;
+            }
+            else if (value > maxR){
+                inputR.setCustomValidity("Значение слишком большое, должно быть не больше " + maxR);
+                return false;
+            }
+            else {
+                inputR.setCustomValidity("");
+                return true;
+            }
+        }
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if(!validateY() || !validateR()) {
+                return ;
+            }
+            const formData = Object.fromEntries(new FormData(this));
+
+            fetch('/fcgi-bin/labwork1.jar', {
+                method: 'POST',
+                body: Object.keys(formData).map(e => `${e}=${formData[e]}`).join("😁"),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    result.push({x: document.getElementById("x").value,
+                                 y: (+document.getElementById("y").value).toString(),
+                                 r: (+document.getElementById("r").value).toString(),
+                                 isHit: data.isHit, curTime: data.curTime, dur: data.dur});
+                    populateTable(result);
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                });
+        });
+
+    </script>
+</body>
+</html>
