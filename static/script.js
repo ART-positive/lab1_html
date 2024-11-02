@@ -54,52 +54,30 @@ const maxR = 4;
 const inputY = document.getElementById('y');
 const inputR = document.getElementById('r');
 
-function validateY() {
-  if (inputY.value.toString() === '') {
-    inputY.setCustomValidity('Некорректное значение!');
+function validateInput(input, min, max) {
+  const { value } = input;
+  if (value.trim() === '') {
+    input.setCustomValidity('Некорректное значение!');
     return false;
   }
-  if (inputY.value.toString().includes('e')) {
-    inputY.setCustomValidity('What are you doing??🤨');
+  if (value.toString().includes('e')) {
+    input.setCustomValidity('What are you doing??🤨');
     return false;
   }
-  const { value } = inputY;
-  if (value < minY) {
-    inputY.setCustomValidity(`Значение слишком маленькое, должно быть не меньше ${minY}`);
+  if (value < min) {
+    input.setCustomValidity(`Значение слишком маленькое, должно быть не меньше ${min}`);
     return false;
   }
-  if (value > maxY) {
-    inputY.setCustomValidity(`Значение слишком большое, должно быть не больше ${maxY}`);
+  if (value > max) {
+    input.setCustomValidity(`Значение слишком большое, должно быть не больше ${max}`);
     return false;
   }
-  inputY.setCustomValidity('');
+  input.setCustomValidity('');
   return true;
 }
 
-function validateR() {
-  if (inputR.value === '') {
-    inputR.setCustomValidity('Некорректное значение!');
-    return false;
-  }
-  if (inputR.value.toString().includes('e')) {
-    inputR.setCustomValidity('What are you doing??🤨');
-    return false;
-  }
-  const { value } = inputR;
-  if (value < minR) {
-    inputR.setCustomValidity(`Значение слишком маленькое, должно быть не меньше ${minR}`);
-    return false;
-  }
-  if (value > maxR) {
-    inputR.setCustomValidity(`Значение слишком большое, должно быть не больше ${maxR}`);
-    return false;
-  }
-  inputR.setCustomValidity('');
-  return true;
-}
-
-inputY.addEventListener('input', validateY);
-inputR.addEventListener('input', validateR);
+inputY.addEventListener('input', () => validateInput(inputY, minY, maxY));
+inputR.addEventListener('input', () => validateInput(inputR, minR, maxR));
 
 function showNotification(message) {
   const notification = document.createElement('div');
@@ -140,7 +118,7 @@ function responseData(data) {
 
 async function handleSubmit(event) {
   event.preventDefault();
-  if (!validateY() || !validateR()) {
+  if (!validateInput(inputY, minY, maxY) || !validateInput(inputR, minR, maxR)) {
     return;
   }
 
